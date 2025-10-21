@@ -13,7 +13,7 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 STATIC_URL = '/static/'
 
@@ -28,7 +28,6 @@ DEBUG = True
 STATIC_URL = '/static/'
 ALLOWED_HOSTS = ['*']
 STATIC_ROOT = BASE_DIR / "staticfiles"
-
 
 
 # Application definition
