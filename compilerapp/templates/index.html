@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MiniLang Web</title>
+<style>
+/* Fondo de la página */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Consolas', monospace;
+    color: #fff;
+    background: url("{% static 'imagen1.png' %}") no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Contenedor central */
+.container {
+    width: 800px;
+    background-color: rgba(30,30,30,0.85); /* fondo semitransparente */
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+/* Título */
+h1 {
+    text-align: center;
+    color: #61dafb;
+}
+
+/* Área de texto para código */
+textarea {
+    width: 100%;
+    height: 200px;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    resize: vertical;
+    margin-bottom: 12px;
+}
+
+/* Botón de ejecutar */
+button {
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background: #61dafb;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #21a1f1;
+}
+
+/* Cuadro de salida */
+#salida {
+    min-height: 100px;
+    background: rgba(0,0,0,0.6);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    font-family: monospace;
+    font-size: 16px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    margin-top: 10px;
+    color: #0f0; /* color de texto por defecto */
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>MiniLang Web</h1>
+
+    <form id="form-analisis">
+        {% csrf_token %}
+        <textarea id="codigo" name="codigo">x = 5
+y = 3
+z = x*y + 10
+print(z)
+x = x + 1
+print(x)</textarea>
+        <button type="submit">Ejecutar</button>
+    </form>
+
+    <h3>Salida:</h3>
+    <div id="salida">&lt;sin salida&gt;</div>
+</div>
+
+<script>
+document.getElementById("form-analisis").addEventListener("submit", async function(e){
+    e.preventDefault();
+    const salida = document.getElementById("salida");
+    salida.textContent = "Ejecutando...";
+    salida.style.color = "#0f0"; // verde por defecto
+
+    const formData = new FormData(this);
+    const response = await fetch("{% url 'analizar' %}", {
+        method: "POST",
+        headers: {
+            "X-CSRFToken": document.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+        body: formData
+    });
+
+    const data = await response.json();
+    if(data.error){
+        salida.textContent = "Error: " + data.error;
+        salida.style.color = "#ff6b6b"; // rojo si hay error
+    } else {
+        salida.textContent = data.resultados.join("\n");
+        salida.style.color = "#0f0"; // verde
+    }
+});
+</script>
+</body>
+</html>

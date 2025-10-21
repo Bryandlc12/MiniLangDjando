@@ -1,0 +1,68 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Consolas', monospace;
+    color: #fff;
+    background: url("/static/imagen1.png") no-repeat center center fixed;
+    background-size: cover;
+}
+
+
+
+.container {
+    width: 800px;
+    background-color: rgba(30,30,30,0.85); /* fondo semitransparente */
+    margin: 50px auto;
+    padding: 20px; /* espacio dentro */
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    color: #fff; /* texto blanco */
+}
+
+
+h1 {
+    text-align: center;
+    color: #61dafb;
+}
+
+textarea {
+    width: 100%;
+    height: 200px;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    resize: vertical;
+    margin-bottom: 12px;
+}
+
+button {
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background: #61dafb;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #21a1f1;
+}
+
+#salida {
+    min-height: 100px;
+    background: rgba(0,0,0,0.6);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    font-family: monospace;
+    font-size: 16px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+}
