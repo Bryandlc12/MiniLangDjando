@@ -1,1 +1,1 @@
-web: gunicorn MiniLangDjando.wsgi:application
+web: gunicorn MiniLangfor.wsgi:application
